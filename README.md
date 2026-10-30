@@ -20,17 +20,29 @@ Nicht unterstützt: Live-Streams, DRM-geschützte Inhalte und Videos, bei denen 
 
 Voraussetzung: **Firefox 128 oder neuer** (die Erweiterung nutzt MAIN-World-Content-Scripts, ab Firefox 128 verfügbar).
 
+### Fertige Datei herunterladen
+
+Im Ordner `dist/` liegt die fertige Erweiterung `youtube-downloader.xpi`. Sie wird mit `./build.sh` erzeugt und ist im Repo eingecheckt. Nach dem Herunterladen des Repos als ZIP ist sie direkt verwendbar, ohne Umbenennen.
+
 ### Temporär (zum Ausprobieren)
 
 1. `about:debugging#/runtime/this-firefox` öffnen.
 2. **„Temporäre Erweiterung laden“** wählen.
-3. Die Datei `manifest.json` aus diesem Ordner auswählen.
+3. Die Datei `manifest.json` aus dem entpackten Ordner (nicht die `.xpi`) auswählen.
 
 Temporäre Erweiterungen werden beim Neustart von Firefox entfernt.
 
 ### Dauerhaft
 
-Firefox akzeptiert dauerhaft nur signierte Erweiterungen. Entweder das Paket bei [addons.mozilla.org](https://addons.mozilla.org/developers/) als „Nur für mich“ signieren lassen oder in Firefox Developer Edition / Nightly `xpinstall.signatures.required` auf `false` setzen.
+Firefox akzeptiert dauerhaft nur signierte Erweiterungen. Für die eigene Nutzung kannst du in Firefox Developer Edition / Nightly `xpinstall.signatures.required` auf `false` setzen und dann `dist/youtube-downloader.xpi` über `about:addons` → Zahnrad → „Add-on aus Datei installieren…“ installieren. Die Release-Version von Firefox ignoriert diese Einstellung.
+
+### Selbst bauen
+
+```bash
+./build.sh
+```
+
+Das erstellt `dist/youtube-downloader.xpi` neu. Nach Code-Änderungen also erneut ausführen und die `.xpi` neu installieren.
 
 ## Verwendung
 
