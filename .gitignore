@@ -1,0 +1,15 @@
+# Vom E2E-Test erzeugt (Kopie der Erweiterung, Firefox-Profil, Downloads)
+test/extension/
+test/work/
+
+# Python
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# Editoren / OS
+.DS_Store
+Thumbs.db
+*.swp

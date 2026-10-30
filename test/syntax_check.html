@@ -1,0 +1,38 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>pending</title></head>
+<body>
+<div id="ytd-player-loaded"></div>
+<div id="movie-container"><div style="width:100%;height:400px"></div></div>
+<div id="ytdl-results">pending</div>
+<script>
+  const results = [];
+  function step(name, fn) {
+    try { fn(); } catch (e) { results.push(name + "=FEHLER:" + e); }
+  }
+</script>
+<script src="/extension/lib/lamejs.js"></script>
+<script>
+  step("lamejs", () => {
+    if (typeof globalThis.lamejs !== "object" || typeof globalThis.lamejs.Mp3Encoder !== "function") {
+      throw new Error("lamejs.Mp3Encoder fehlt");
+    }
+    results.push("lamejs=OK");
+  });
+</script>
+<script src="/extension/mp4.js"></script>
+<script>
+  step("mp4", () => {
+    if (typeof globalThis.MP4T !== "object") throw new Error("MP4T fehlt");
+    results.push("mp4=OK keys=" + Object.keys(globalThis.MP4T).join(","));
+  });
+</script>
+<script src="/extension/content.js"></script>
+<script>
+  step("content", () => {
+    if (!globalThis.__YTDL_LOADED__) throw new Error("__YTDL_LOADED__ fehlt");
+    results.push("content=OK root=" + !!document.getElementById("ytdl-root"));
+  });
+  document.getElementById("ytdl-results").textContent = results.join(" | ");
+  document.title = "done";
+</script>
+</body></html>

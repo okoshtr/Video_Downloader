@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Test-Video (Fake YouTube)</title>
+  <style>
+    body { background: #0f0f0f; color: #f1f1f1; font-family: Roboto, Arial, sans-serif; margin: 0; padding: 24px; }
+    h2 { font-size: 16px; color: #aaa; font-weight: 400; margin-top: 0; }
+    #movie-container { width: 720px; max-width: 100%; height: 405px; background: #000; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; color: #555; font-size: 14px; }
+    #actions { margin-top: 12px; color: #aaa; font-size: 14px; }
+    .note { color: #666; font-size: 12px; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+  <h2 id="video-title">Test Video Demo</h2>
+  <div class="note" id="test-note">Testumgebung: simuliert eine YouTube-Videoseite.</div>
+
+  <ytd-player-loaded>
+    <div id="movie-container">[Video-Player-Platzhalter]</div>
+  </ytd-player-loaded>
+
+  <div id="actions">👍 123&nbsp;&nbsp;&nbsp;👎&nbsp;&nbsp;&nbsp;Teilen&nbsp;&nbsp;&nbsp;Speichern</div>
+
+  <script>
+    // Query-Parameter:
+    //   audio      : "aac" (Default) | "opus"  – Codec der DASH-Audiodatei
+    //   slow       : "1" – progressive Streams laufen über den langsamen /slow/-Endpunkt
+    //   noAdaptive : "1" – nur progressive Formate (kein DASH, kein separates Audio)
+    const q = new URLSearchParams(location.search);
+    const base = location.origin;
+    const audioFile = q.get('audio') === 'opus' ? 'audio-opus.mp4' : 'audio-aac.mp4';
+    const audioCodec = q.get('audio') === 'opus' ? 'opus' : 'mp4a.40.2';
+    const slowPrefix = q.get('slow') === '1' ? '/slow/' : '/fixtures/';
+    const noAdaptive = q.get('noAdaptive') === '1';
+
+    const formats = [
+      {
+        itag: 18,
+        url: base + slowPrefix + 'progressive480.mp4',
+        mimeType: 'video/mp4; codecs="avc1.4d401f, mp4a.40.2"',
+        vcodec: 'avc1.4d401f', acodec: 'mp4a.40.2',
+        width: 854, height: 480, bitrate: 3000000, audioSampleRate: 48000
+      }
+    ];
+
+    const adaptiveFormats = noAdaptive ? [] : [
+      {
+        itag: 137,
+        url: base + '/fixtures/video-dash-720.mp4',
+        mimeType: 'video/mp4; codecs="avc1.4d401f"',
+        vcodec: 'avc1.4d401f', acodec: 'none',
+        width: 1280, height: 720, bitrate: 4000000
+      },
+      {
+        itag: 134,
+        url: base + '/fixtures/video-dash-1080.mp4',
+        mimeType: 'video/mp4; codecs="avc1.640028"',
+        vcodec: 'avc1.640028', acodec: 'none',
+        width: 1920, height: 1080, bitrate: 8000000
+      },
+      {
+        itag: 251,
+        url: base + '/fixtures/' + audioFile,
+        mimeType: 'audio/mp4; codecs="' + audioCodec + '"',
+        vcodec: 'none', acodec: audioCodec,
+        bitrate: audioCodec === 'opus' ? 64000 : 128000, audioSampleRate: 48000
+      }
+    ];
+
+    window.ytInitialPlayerResponse = {
+      videoDetails: {
+        title: 'Test Video Demo',
+        videoId: 'test123456',
+        isLive: 'false',
+        isLiveContent: 'false'
+      },
+      playabilityStatus: { status: 'OK' },
+      streamingData: {
+        formats: formats,
+        adaptiveFormats: adaptiveFormats
+      }
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Minimal Test",
+  "version": "1.0",
+  "browser_specific_settings": { "gecko": { "id": "min-ext@test.local" } },
+  "content_scripts": [
+    {
+      "matches": ["http://127.0.0.1/*"],
+      "js": ["cs.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

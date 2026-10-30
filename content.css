@@ -1,0 +1,167 @@
+/* YouTube Downloader – Styling des Content-Scripts */
+
+#ytdl-root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  color: #f1f1f1;
+  line-height: 1.45;
+  margin: 12px 0;
+}
+
+#ytdl-root * {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.ytdl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #272727;
+  color: #f1f1f1;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ytdl-btn:hover { background: #3d3d3d; }
+.ytdl-btn:disabled { opacity: 0.5; cursor: default; }
+
+.ytdl-main { font-size: 15px; padding: 9px 20px; }
+.ytdl-ico { font-size: 16px; line-height: 1; }
+
+.ytdl-panel {
+  background: #212121;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 14px 16px;
+  width: 440px;
+  max-width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.ytdl-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.ytdl-title {
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ytdl-icon {
+  background: none;
+  border: none;
+  color: #aaaaaa;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+}
+.ytdl-icon:hover { color: #ffffff; background: rgba(255, 255, 255, 0.08); }
+
+.ytdl-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin: 8px 0;
+}
+
+.ytdl-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ytdl-field label {
+  font-size: 12px;
+  color: #aaaaaa;
+}
+
+#ytdl-root select {
+  background: #3d3d3d;
+  color: #f1f1f1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 7px 8px;
+  font-size: 13px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.ytdl-prog { margin-top: 10px; }
+
+.ytdl-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: #3d3d3d;
+  overflow: hidden;
+}
+
+.ytdl-fill {
+  height: 100%;
+  width: 0%;
+  background: #3ea6ff;
+  border-radius: 3px;
+  transition: width 0.15s ease;
+}
+
+.ytdl-fill.indet {
+  width: 40%;
+  animation: ytdlslide 1.2s infinite linear;
+}
+
+@keyframes ytdlslide {
+  0% { transform: translateX(-110%); }
+  100% { transform: translateX(320%); }
+}
+
+.ytdl-status {
+  font-size: 12px;
+  color: #cccccc;
+  margin: 6px 0;
+}
+
+.ytdl-error {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: rgba(255, 80, 80, 0.12);
+  border: 1px solid rgba(255, 80, 80, 0.4);
+  border-radius: 8px;
+  color: #ffb4b4;
+  font-size: 13px;
+}
+
+.ytdl-danger {
+  background: #3a2727;
+  border-color: rgba(255, 100, 100, 0.35);
+  color: #ffb4b4;
+}
+.ytdl-danger:hover { background: #4a2f2f; }
+
+/* Fallback: schwebender Button, wenn kein Player-Container gefunden wird */
+.ytdl-floating {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2147483000;
+}
+.ytdl-floating .ytdl-panel { width: 420px; }
